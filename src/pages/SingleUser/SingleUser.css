@@ -1,0 +1,128 @@
+.SingleUser {
+  display: flex;
+  gap: 2em;
+  margin: 2em;
+  margin-bottom: 0;
+}
+
+.SingleUser .index-left {
+  flex: 1.2;
+}
+
+.SingleUser-right {
+  flex: 5;
+  display: flex;
+  flex-direction: column;
+  /* background-color: white;
+  padding: 1em;
+  border-radius: 6px; */
+  padding-left: 2em;
+  border-left: 1px solid #c4c4c4;
+}
+
+.SingleUser-img-container {
+  display: flex;
+  position: relative;
+}
+
+.SingleUser-background-photo {
+  width: 90%;
+  height: 300px;
+  border-radius: 6px;
+  object-fit: cover;
+  image-rendering: pixelated;
+}
+
+.SingleUser-profile-photo {
+  border-radius: 50%;
+  height: 160px;
+  width: 160px;
+  object-fit: cover;
+  image-rendering: pixelated;
+  position: absolute;
+  bottom: -52px;
+  left: 5px;
+}
+
+.SingleUser-user-details {
+  display: flex;
+  flex-direction: column;
+  margin: 3em 0 1em 0;
+}
+
+.SingleUser-name {
+  font-size: 2em;
+  font-weight: 700;
+  font-family: "Poppins", sans-serif;
+}
+
+.SingleUser-data {
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--dark-grey);
+  line-height: 1em;
+  margin-bottom: 5px;
+}
+
+.SingleUser-dob-friends-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 80%;
+}
+
+.SingleUser-dob-friends-container .SingleUser-data {
+  color: #444444;
+  margin: 5px 0;
+  font-size: 17px;
+}
+
+.SingleUser-btn-container {
+  display: flex;
+  align-items: center;
+  gap: 2em;
+  margin: 8px 0;
+}
+
+.SingleUser-btn {
+  padding: 6px 12px;
+  border-radius: 20px;
+  background-color: var(--dark-grey);
+  font-size: 17px;
+  font-weight: 500;
+  font-family: "Poppins", sans-serif;
+  width: 80px;
+  text-align: center;
+}
+
+.SingleUser-btn:hover {
+  cursor: pointer;
+  opacity: 0.8;
+  transition: all .1s ease-in-out;
+}
+
+.SingleUser-msg-btn {
+  background-color: deepskyblue;
+}
+
+.SingleUser-req-btn {
+  background-color: lightcoral;
+}
+
+.SingleUser-allPosts h2{
+    margin: 5px 0 0 0;
+    font-family: "Poppins",sans-serif;
+}
+
+.SingleUser-allPosts{
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    width: 90%;
+    margin: 10px 0;
+}
+
+.SingleUser-allPosts .HomePost-emoji-input-container{
+    bottom: 165px;
+    right: -100px;
+}

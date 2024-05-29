@@ -1,0 +1,129 @@
+.IndexRight {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.birthdayNotification-container {
+  width: 100%;
+  border-radius: 7px;
+  padding: 3px 10px;
+  background-color: white;
+  font-size: 14px;
+  font-family: "Poppins", sans-serif;
+}
+
+.IndexRight-birthday-notification {
+  font-size: 15px;
+  font-weight: 700;
+  font-family: "Open sans", sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 3px;
+}
+
+.IndexRight-cake-icon {
+  font-size: 1em;
+  color: crimson;
+}
+
+.IndexRight-birthday-notification-cancel {
+  font-size: 1.3em;
+}
+
+.IndexRight-birthday-notification-cancel:hover {
+  cursor: pointer;
+  color: var(--dark-grey);
+}
+
+.IndexRight-notification {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0;
+  padding: 4px;
+  border-radius: 6px;
+  font-family: "Poppins", sans-serif;
+  font-size: 15px;
+  line-height: 1.1em;
+}
+
+.IndexRight-notification:hover {
+  background-color: #d3d3d3;
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+}
+
+.IndexRight-notification span {
+  font-family: "Open Sans", sans-serif;
+  font-weight: 700;
+}
+
+.IndexRight-notification img,
+.IndexRight-friend-req-item img {
+  width: 30px;
+  border-radius: 50%;
+}
+
+.IndexRight-notification-time,
+.IndexRight-friend-req-mutual {
+  color: var(--dark-grey);
+  font-size: 12px;
+}
+
+.IndexRight-friend-req {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 7px 10px;
+  background-color: white;
+  border-radius: 6px;
+  margin: 10px 0;
+  font-family: "Poppins", sans-serif;
+  line-height: 1.2em;
+}
+
+.IndexRight-friend-req-item {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  width: fit-content;
+}
+
+.IndexRight-friend-req-btn {
+  padding: 4px 10px;
+  border-radius: 18px;
+  font-size: 14px;
+  font-family: "Poppins", sans-serif;
+}
+
+.IndexRight-friend-req-btn:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.IndexRight-friend-req-mutual {
+  font-size: 14px;
+}
+
+.IndexRight-friend-req-name {
+  font-weight: 700;
+  font-size: 15px;
+  font-family: "Open Sans", sans-serif;
+}
+
+.IndexRight-show-all-request,
+.IndexRight-show-all-activity {
+  font-size: 14px;
+  color: var(--dark-grey);
+  font-family: "Poppins", sans-serif;
+  margin: 5px 0;
+}
+
+.IndexRight-show-all-request:hover,
+.IndexRight-show-all-activity:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}

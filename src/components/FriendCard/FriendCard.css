@@ -1,0 +1,76 @@
+.FriendCard {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 30%;
+  box-shadow: 2px 2px 7px var(--dark-grey);
+  border-radius: 6px;
+  margin: 12px 0;
+  padding: 10px;
+  background-color: white;
+}
+
+.FriendCard-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.FriendCard-img-name {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.FriendCard-img-name img {
+  width: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--light-grey);
+}
+
+.FriendCard-img-name span {
+  font-family: "Poppins", sans-serif;
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.FriendCard-req-time {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--dark-grey);
+}
+
+.FriendCard-btn-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px;
+}
+
+.FriendCard-remove-btn,
+.FriendCard-msg-btn {
+  background-color: var(--dark-red);
+  color: white;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-family: "Poppins", sans-serif;
+}
+
+.FriendCard-remove-btn:hover,
+.FriendCard-msg-btn:hover {
+  cursor: pointer;
+  opacity: 0.8;
+  transition: all 0.1s ease-in-out;
+}
+
+.FriendCard-msg-btn {
+  background-color: rgb(0, 140, 255);
+}
+
+.FriendCard-mutual {
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.2em;
+  color: var(--dark-grey);
+}

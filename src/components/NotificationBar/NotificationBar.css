@@ -1,0 +1,44 @@
+.NotificationBar {
+  padding: 10px;
+  border-radius: 6px;
+  background-color: white;
+  width: 95%;
+  display: flex;
+  flex-direction: column;
+  margin: 1em 0;
+  box-shadow: 2px 2px 7px var(--dark-grey);
+}
+
+.NotificationBar a {
+  width: 100%;
+}
+
+.NotificationBar-info-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.NotificationBar-info-container img {
+  width: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--light-grey);
+}
+
+.NotificationBar-info {
+  font-size: 17px;
+  font-family: "Poppins", sans-serif;
+}
+
+.NotificationBar-info span {
+  font-weight: 500;
+}
+
+.NotificationBar-time {
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+  color: var(--dark-grey);
+  justify-content: flex-end;
+  font-weight: 500;
+}

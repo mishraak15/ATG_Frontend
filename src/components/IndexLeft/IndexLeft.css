@@ -1,0 +1,104 @@
+.IndexLeft {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  margin-top: 10px;
+}
+
+.IndexLeft-options {
+  width: 90%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 1em;
+  border-radius: 6px;
+  padding: 5px 8px;
+}
+
+.IndexLeft-options:hover {
+  background-color: #d3d3d3;
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+}
+
+.IndexLeft-options span {
+  /* font-family: "Poppins", sans-serif; */
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.IndexLeft-icon-container {
+  padding: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.IndexLeft-icons {
+  font-size: 1.1em;
+}
+
+.IndexLeft-SeeMoreOption {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  font-size: 14px;
+  margin-top: 5px;
+  color: var(--dark-grey);
+}
+
+.IndexLeft-SeeMoreOption:hover {
+  color: black;
+  transition: all 0.1s ease-in-out;
+  cursor: pointer;
+}
+
+.IndexLeft-head {
+  font-size: 14px;
+  font-weight: 600;
+  font-family: "Poppins", sans-serif;
+  margin-top: 3px;
+  color: var(--dark-grey);
+}
+
+.IndexLeft-active-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.IndexLeft-active {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px;
+  border-radius: 6px;
+}
+
+.IndexLeft-active:hover {
+  background-color: #d3d3d3;
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+}
+
+.IndexLeft-active img {
+  width: 30px;
+  border-radius: 50%;
+}
+
+.IndexLeft-active span {
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.IndexLeft-active-dot {
+  position: absolute;
+  bottom: 4px;
+  right: 0;
+  background-color: limegreen;
+  padding: 3px;
+  border-radius: 50%;
+  box-shadow: 3px 3px 15px limegreen;
+}

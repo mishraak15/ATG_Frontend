@@ -1,0 +1,10 @@
+.AllNotifications {
+  display: flex;
+  gap: 2em;
+  margin: 2em;
+  margin-bottom: 0;
+}
+
+.AllNotifications-mid {
+  flex: 4;
+}

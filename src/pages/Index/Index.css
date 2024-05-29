@@ -1,0 +1,30 @@
+.Index{
+    display: flex;
+    gap: 2em;
+    margin: 2em;
+    margin-bottom: 0;
+}
+
+.index-left{
+    flex: 1;
+    min-height: calc(100vh - 62px);
+    max-height: calc(100vh - 62px);
+    position: sticky;
+    top: 60px;
+    overflow-x: hidden;
+    padding-right: 2em;
+}
+
+.index-mid{
+    flex: 4;
+}
+
+.index-right{
+    flex: 1.5;
+    min-height: calc(100vh - 62px);
+    max-height: calc(100vh - 62px);
+    position: sticky;
+    top: 60px;
+    overflow-x: hidden;
+    padding-right: 2em;
+}

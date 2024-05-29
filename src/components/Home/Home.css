@@ -1,0 +1,135 @@
+.home-top {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  padding: 10px 2em;
+  border-radius: 6px;
+  gap: 10px;
+}
+
+.home-top1 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.home-top1 img {
+  width: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--light-grey);
+}
+
+.home-top1 textarea {
+  resize: none;
+  width: 90%;
+  border: none;
+  background-color: var(--light-grey);
+  border-radius: 17px;
+  padding: 8px 1em;
+  font-size: 15px;
+  outline: none;
+  font-family: "Poppins", sans-serif;
+  overflow-y: hidden;
+}
+
+.home-post-btn {
+  align-self: flex-end;
+  background-color: var(--light-blue);
+  padding: 4px 10px;
+  border-radius: 7px;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.home-post-btn:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.home-top2 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 2px;
+}
+
+.home-top2 div {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.home-top2 div:hover {
+  background-color: #d3d3d3;
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+}
+
+.home-top2-icon {
+  font-size: 1.5em;
+}
+
+.home-post-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  margin: 2em 0;
+}
+
+.Home-input-post {
+  position: absolute;
+  width: 90%;
+  opacity: 0;
+  z-index: 2;
+  cursor: pointer;
+}
+
+.Home-emoji-input-container {
+  position: absolute;
+  top: 92px;
+  z-index: 2;
+  right: 5px;
+  border-radius: 10px;
+  box-shadow: 1px 2px 5px var(--dark-grey);
+  cursor: pointer;
+}
+
+.Home-new-post-img-preview {
+  width: 100px;
+  height: 100px;
+  image-rendering: pixelated;
+  object-fit: cover;
+  border: 1px solid var(--light-grey);
+  border-radius: 6px;
+  margin: 5px 0;
+}
+
+.Home-new-post-img-preview-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.Home-new-post-img-preview-container button {
+  border: none;
+  background-color: var(--dark-red);
+  border-radius: 6px;
+  padding: 3px 8px;
+  font-size: 14px;
+  color: white;
+  font-family: "Poppins", sans-serif;
+}
+
+.Home-new-post-img-preview-container button:hover {
+  cursor: pointer;
+  opacity: 0.8;
+  transition: all 0.1s ease-in-out;
+}
+
+input[type="file"]::-webkit-file-upload-button {
+  cursor: pointer;
+}

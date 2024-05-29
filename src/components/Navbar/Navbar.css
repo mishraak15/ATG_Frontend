@@ -1,0 +1,87 @@
+.Navbar{
+    height: 60px;
+    background-color: white;
+    box-shadow: 1px 2px 12px #b1b1b1;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 2em;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+.nav-left{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-weight: 600;
+}
+
+.nav-left img{
+    width: 40px;
+    border-radius: 50%;
+    border: 1px solid var(--light-grey);
+}
+
+.nav-mid{
+    background-color: var(--light-grey);
+    padding: 5px 1em;
+    border-radius: 16px;
+    width: 35%;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.nav-mid input{
+    border: none;
+    background-color: transparent;
+    font-size: 15px;
+    width: 100%;
+    outline: none;
+    font-family: 'Poppins',sans-serif;
+}
+
+.nav-mid-search-icon{
+    font-size: 1.3em;
+    color: var(--dark-grey);
+}
+
+.nav-right{
+    display: flex;
+    align-items: center;
+    gap: 1em;
+}
+
+.nav-icon-container{
+    padding: 5px;
+    border-radius: 50%;
+    background-color: var(--light-grey);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.nav-icon-container:hover  .nav-right-icons{
+    color: var(--dark-grey);
+   transition: all 0.2s ease-in-out;
+}
+
+.nav-right-icons{
+    font-size: 1.1em;
+    color: black;
+}
+
+.nav-alert-dot{
+    background-color: var(--dark-red);
+    padding: 3px;
+    border-radius: 50%;
+    position: absolute;
+    top: 6px;
+    right: 4px;
+    box-shadow: 3px 3px 15px var(--dark-red);
+}

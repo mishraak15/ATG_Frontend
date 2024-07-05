@@ -48,20 +48,28 @@
   display: flex;
   flex-direction: column;
   margin: 3em 0 1em 0;
+  gap: 4px;
 }
 
 .SingleUser-name {
-  font-size: 2em;
+  font-size: 1.7em;
   font-weight: 700;
-  font-family: "Poppins", sans-serif;
+  /* font-family: "Poppins", sans-serif; */
+  margin-top: 10px;
 }
 
 .SingleUser-data {
-  font-size: 19px;
+  font-size: 18px;
   font-weight: 600;
   color: var(--dark-grey);
   line-height: 1em;
-  margin-bottom: 5px;
+  margin: 0 3px;
+}
+
+.SingleUser-bio {
+  font-size: 17px;
+  margin: 0 3px;
+  font-weight: 500;
 }
 
 .SingleUser-dob-friends-container {
@@ -69,36 +77,36 @@
   align-items: center;
   justify-content: space-between;
   width: 80%;
+  margin: 0 3px;
 }
 
 .SingleUser-dob-friends-container .SingleUser-data {
-  color: #444444;
-  margin: 5px 0;
   font-size: 17px;
+  color: black;
+  font-weight: 600;
 }
 
 .SingleUser-btn-container {
   display: flex;
   align-items: center;
   gap: 2em;
-  margin: 8px 0;
+  margin: 5px 0;
 }
 
 .SingleUser-btn {
-  padding: 6px 12px;
+  padding: 4px 12px;
   border-radius: 20px;
-  background-color: var(--dark-grey);
-  font-size: 17px;
+  background-color: #c4c4c4;
   font-weight: 500;
   font-family: "Poppins", sans-serif;
-  width: 80px;
   text-align: center;
+  width: fit-content;
 }
 
 .SingleUser-btn:hover {
   cursor: pointer;
   opacity: 0.8;
-  transition: all .1s ease-in-out;
+  transition: all 0.1s ease-in-out;
 }
 
 .SingleUser-msg-btn {
@@ -106,23 +114,24 @@
 }
 
 .SingleUser-req-btn {
-  background-color: lightcoral;
+  background-color: var(--dark-red);
+  color: white;
 }
 
-.SingleUser-allPosts h2{
-    margin: 5px 0 0 0;
-    font-family: "Poppins",sans-serif;
+.SingleUser-allPosts h2 {
+  margin: 5px 0 0 0;
+  font-family: "Poppins", sans-serif;
 }
 
-.SingleUser-allPosts{
-    display: flex;
-    flex-direction: column;
-    gap: 1em;
-    width: 90%;
-    margin: 10px 0;
+.SingleUser-allPosts {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  width: 90%;
+  margin: 10px 0;
 }
 
-.SingleUser-allPosts .HomePost-emoji-input-container{
-    bottom: 165px;
-    right: -100px;
+.SingleUser-allPosts .HomePost-emoji-input-container {
+  bottom: 165px;
+  right: -100px;
 }

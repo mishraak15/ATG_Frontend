@@ -1,5 +1,7 @@
 import axios from "axios";
 import toast from "react-hot-toast";
+import { fetchPosts } from "../Home/HomeScript";
+import { fetchJobs } from "../Jobs/JobsScript";
 
 export async function downloadImage(url, filename) {
   fetch(url)
@@ -99,11 +101,15 @@ export const handleCopy = async (id) => {
 };
 
 const url = process.env.REACT_APP_BACKEND_URL;
-let userid = "6653001e262fa63382979cfa";
 
 export function likeClickHandler(postid) {
+  const userid = localStorage.getItem("userid");
   axios
-    .post(`${url}/post/${postid}/addlike`, { userid })
+    .post(
+      `${url}/post/${postid}/addlike`,
+      { userid },
+      { withCredentials: true }
+    )
     .then((res) => {
       if (res?.data?.msg === "OK") {
         console.log("Liked");
@@ -113,13 +119,20 @@ export function likeClickHandler(postid) {
     })
     .catch((err) => {
       console.log(err);
-      toast.error("Something went wrong!!");
+      let errMsg = err?.response?.data?.message || "Something went wrong!!";
+      toast.remove();
+      toast.error(errMsg);
     });
 }
 
 export function removeLikeClickHandler(postid) {
+  const userid = localStorage.getItem("userid");
   axios
-    .post(`${url}/post/${postid}/removelike`, { userid })
+    .post(
+      `${url}/post/${postid}/removelike`,
+      { userid },
+      { withCredentials: true }
+    )
     .then((res) => {
       if (res?.data?.msg === "OK") {
         console.log("Removed Like");
@@ -129,7 +142,9 @@ export function removeLikeClickHandler(postid) {
     })
     .catch((err) => {
       console.log(err);
-      toast.error("Something went wrong!!");
+      let errMsg = err?.response?.data?.message || "Something went wrong!!";
+      toast.remove();
+      toast.error(errMsg);
     });
 }
 
@@ -144,6 +159,7 @@ export async function newCommentClickHandler(
   setCommentLength,
   commentLength
 ) {
+  const userid = localStorage.getItem("userid");
   toast.loading("Loading...");
   axios
     .post(
@@ -153,6 +169,7 @@ export async function newCommentClickHandler(
         headers: {
           "Content-Type": "multipart/form-data",
         },
+        withCredentials: true,
       }
     )
     .then((res) => {
@@ -172,15 +189,21 @@ export async function newCommentClickHandler(
     })
     .catch((err) => {
       console.log(err);
+      let errMsg = err?.response?.data?.message || "Something went wrong!!";
       toast.remove();
-      toast.error("Something went wrong!!");
+      toast.error(errMsg);
     });
 }
 
 export function savePostClickHandler(postid) {
+  const userid = localStorage.getItem("userid");
   toast.loading("Loading...");
   axios
-    .post(`${url}/user/${userid}/savepost`, { postid })
+    .post(
+      `${url}/user/${userid}/savepost`,
+      { postid },
+      { withCredentials: true }
+    )
     .then((res) => {
       if (res?.data?.msg === "OK") {
         console.log("Saved");
@@ -196,15 +219,21 @@ export function savePostClickHandler(postid) {
     })
     .catch((err) => {
       console.log(err);
+      let errMsg = err?.response?.data?.message || "Something went wrong!!";
       toast.remove();
-      toast.error("Something went wrong!!");
+      toast.error(errMsg);
     });
 }
 
 export function addtoFavoriteClickHandler(postid) {
+  const userid = localStorage.getItem("userid");
   toast.loading("Loading...");
   axios
-    .post(`${url}/user/${userid}/addtofavorite`, { postid })
+    .post(
+      `${url}/user/${userid}/addtofavorite`,
+      { postid },
+      { withCredentials: true }
+    )
     .then((res) => {
       if (res?.data?.msg === "OK") {
         console.log("Added to Favorites");
@@ -220,7 +249,92 @@ export function addtoFavoriteClickHandler(postid) {
     })
     .catch((err) => {
       console.log(err);
+      let errMsg = err?.response?.data?.message || "Something went wrong!!";
       toast.remove();
-      toast.error("Something went wrong!!");
+      toast.error(errMsg);
+    });
+}
+
+export function deletePostClickHandler(
+  postid,
+  navigate,
+  setPosts,
+  setLoading,
+  mode = "Post"
+) {
+  toast.loading("Loading...");
+  axios
+    .delete(`${url}/post/${postid}`, { withCredentials: true })
+    .then((res) => {
+      if (res?.data?.msg === "OK") {
+        toast.remove();
+        toast.success("Post Deleted Successfully!!");
+        mode === "Jobs"
+          ? fetchJobs(setPosts, setLoading)
+          : fetchPosts(setPosts, setLoading, navigate);
+      } else {
+        toast.remove();
+        toast.error("Something unusual happened!!");
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      let errMsg = err?.response?.data?.message || "Something went wrong!!";
+      toast.remove();
+      toast.error(errMsg);
+    });
+}
+
+export function removeFromFavoriteClickHandler(postid, fetchFavoritePosts) {
+  const userid = localStorage.getItem("userid");
+  toast.loading("Loading...");
+  axios
+    .post(
+      `${url}/user/${userid}/removeFromFavorites`,
+      { postid },
+      { withCredentials: true }
+    )
+    .then((res) => {
+      if (res?.data?.msg === "OK") {
+        toast.remove();
+        toast.success("Removed from Favorites!!");
+        fetchFavoritePosts();
+      } else {
+        toast.remove();
+        toast.error("Something unusual happened!!");
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      let errMsg = err?.response?.data?.message || "Something went wrong!!";
+      toast.remove();
+      toast.error(errMsg);
+    });
+}
+
+export function removeSavedPostClickHandler(postid, fetchSavedPosts) {
+  const userid = localStorage.getItem("userid");
+  toast.loading("Loading...");
+  axios
+    .post(
+      `${url}/user/${userid}/removeFromSaved`,
+      { postid },
+      { withCredentials: true }
+    )
+    .then((res) => {
+      if (res?.data?.msg === "OK") {
+        toast.remove();
+        toast.success("Removed from Saved Post!!");
+        fetchSavedPosts();
+      } else {
+        toast.remove();
+        toast.error("Something unusual happened!!");
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      let errMsg = err?.response?.data?.message || "Something went wrong!!";
+      toast.remove();
+      toast.error(errMsg);
     });
 }

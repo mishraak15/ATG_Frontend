@@ -2,10 +2,15 @@ import React, { useEffect, useState } from "react";
 import "./IndexRight.css";
 import { BsCake2Fill } from "react-icons/bs";
 import { MdCancel } from "react-icons/md";
-import { NavLink } from "react-router-dom";
-import profilephoto from "../../assets/ouah28.jpg";
+import { NavLink, useNavigate } from "react-router-dom";
 import { convertPostTime } from "../HomePost/HomePostScript";
-import { birthdayCancelClickHandler } from "./IndexRightScript";
+import {
+  birthdayCancelClickHandler,
+  fetchNotifications,
+  fetchFriendRequests,
+  acceptRequestClickHandler,
+  rejectRequestClickHandler,
+} from "./IndexRightScript";
 
 export default function IndexRight({ setSubsection }) {
   const [connectionsBirthday, setConnectionsBirthday] = useState([]);
@@ -13,47 +18,19 @@ export default function IndexRight({ setSubsection }) {
   const [showAllNotification, setShowAllNotification] = useState(false);
   const [friendRequest, setFriendRequest] = useState([]);
   const [showAllFriendRequest, setShowAllFriendRequest] = useState(false);
-  let userid = "sd2hjb2b34k45bw";
+  const navigate = useNavigate();
+  const userid = localStorage.getItem("userid");
 
   useEffect(() => {
-    setConnectionsBirthday([{ name: "Akash" }, { name: "Swapnil" }]); //Just To test
-    setNotifications([
-      {
-        category: "Liked",
-        sent_by: {
-          name: "Swapnil Tiwari",
-        },
-        sent_at: "Sun May 26 2024 11:37:18",
-        url: "/",
-      },
-
-      {
-        category: "Posted",
-        sent_by: {
-          name: "Lakshya Srivastav",
-        },
-        sent_at: "Tue May 21 2024 15:37:18",
-        url: "/post/v2be2h3h3h",
-      },
-      {
-        category: "Friend Request",
-        sent_by: {
-          name: "Rahul Gupta",
-        },
-        sent_at: "Sat May 25 2024 15:37:18",
-        url: "/",
-      },
-    ]); //Just To test
-
-    setFriendRequest([
-      { name: "Rahul", mutual: 14 },
-      { name: "Lakshya", mutual: 10 },
-      { name: "Kartik", mutual: 4 },
-      { name: "Abhishek", mutual: 0 },
-    ]);
-    setShowAllFriendRequest(true);
-    setShowAllNotification(true);
+    setConnectionsBirthday([{ name: "Akash" }, { name: "Swapnil" }]);
+    fetchNotifications(setNotifications, setShowAllNotification, navigate);
+    fetchFriendRequests(setFriendRequest, setShowAllFriendRequest, navigate);
   }, []);
+
+  function callFunction(){
+    setSubsection("Requests");
+    navigate("/");
+  }
 
   return (
     <div className="IndexRight">
@@ -84,23 +61,24 @@ export default function IndexRight({ setSubsection }) {
       )}
 
       {/* Notifications (That actually happened)*/}
-      {notifications?.length > 0 && (
+      {notifications?.length > 0 ? (
         <div className="notification-container">
           <div className="IndexLeft-head">Latest Activity</div>
           {notifications?.map((e, index) => (
-            <NavLink
+            <div
               key={index}
-              to={e?.url}
               className="IndexRight-notification"
               onClick={() =>
-                e?.category === "Friend Request" ? setSubsection("Requests") : ""
+                e?.category === "Friend Request"
+                  ? callFunction()
+                  : navigate(`${e?.url}`)
               }
             >
-              <img src={profilephoto} alt="" />
+              <img src={e?.sent_by?.profile_photo?.url} alt="" />
 
               <div>
                 <div>
-                  <span>{e?.sent_by?.name} </span>
+                  <span>{e?.sent_by?.username} </span>
                   {e?.category === "Posted"
                     ? " posted something."
                     : e?.category === "Liked"
@@ -115,7 +93,7 @@ export default function IndexRight({ setSubsection }) {
                   {convertPostTime(e?.sent_at)}
                 </div>
               </div>
-            </NavLink>
+            </div>
           ))}
           {showAllNotification && (
             <NavLink
@@ -126,37 +104,63 @@ export default function IndexRight({ setSubsection }) {
             </NavLink>
           )}
         </div>
+      ) : (
+        <div className="IndexLeft-head">No New Notification</div>
       )}
 
       <hr />
       {/* Request yo connect OR Friend Request */}
       <div>
-        {friendRequest?.length > 0 && (
+        {friendRequest?.length > 0 ? (
           <div>
-            <div className="IndexLeft-head">Friend Request</div>
+            <div className="IndexLeft-head">Friend Requests</div>
             {friendRequest?.map((e, index) => (
               <div key={index} className="IndexRight-friend-req">
-                <NavLink to={`/user/${e?.id}/profile`} className="IndexRight-friend-req-item">
-                  <img src={profilephoto} alt="" />
-                  <div>
-                    <div className="IndexRight-friend-req-name">{e?.name}</div>
-                    <div className="IndexRight-friend-req-mutual">
-                      {e?.mutual} mutual friends
+                <div className="IndexRight-friend-req-item">
+                  <img src={e?.sent_by?.profile_photo?.url} alt="profile..." />
+                  <NavLink to={`/user/${e?.sent_by?._id}/profile`}>
+                    <div className="IndexRight-friend-req-name">
+                      {e?.sent_by?.username}
                     </div>
-                  </div>
-                </NavLink>
+                    <div className="IndexRight-friend-req-mutual">
+                      {e?.sent_by?.friends.length} friends
+                    </div>
+                  </NavLink>
+                </div>
                 <div className="IndexRight-friend-req-item">
                   <div
-                    className="IndexRight-friend-req-btn"
+                    className="IndexRight-friend-req-btn IndexRight-accept-btn"
                     style={{ backgroundColor: "var(--light-blue)" }}
+                    onClick={(event) => {
+                      if (event.target.innerHTML === "Accept")
+                        acceptRequestClickHandler(
+                          e?.sent_by?._id,
+                          navigate,
+                          setFriendRequest,
+                          setShowAllFriendRequest
+                        );
+                    }}
                   >
                     Accept
                   </div>
                   <div
-                    className="IndexRight-friend-req-btn"
+                    className="IndexRight-friend-req-btn IndexRight-reject-btn"
                     style={{ backgroundColor: "var(--light-grey)" }}
+                    onClick={(event) => {
+                      if (event.target.innerHTML === "Reject")
+                        rejectRequestClickHandler(
+                          e?.sent_by?._id,
+                          navigate,
+                          setFriendRequest,
+                          setShowAllFriendRequest
+                        );
+                    }}
                   >
-                    Decline
+                    Reject
+                  </div>
+
+                  <div className="IndexRight-friend-req-time">
+                    {convertPostTime(e?.sent_at)}
                   </div>
                 </div>
               </div>
@@ -170,6 +174,8 @@ export default function IndexRight({ setSubsection }) {
               </div>
             )}
           </div>
+        ) : (
+          <div className="IndexLeft-head">No Friend Requests</div>
         )}
       </div>
     </div>

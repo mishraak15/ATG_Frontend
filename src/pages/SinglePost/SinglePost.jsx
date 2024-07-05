@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./SinglePost.css";
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import IndexLeft from "../../components/IndexLeft/IndexLeft";
-import profilePhoto from "../../assets/signup_img.jpg";
 
 import {
   downloadImage,
@@ -11,6 +10,10 @@ import {
   handleCopy,
   previewImage,
   addEmoji,
+  likeClickHandler,
+  removeLikeClickHandler,
+  addtoFavoriteClickHandler,
+  savePostClickHandler,
 } from "../../components/HomePost/HomePostScript";
 
 import { GoHeartFill } from "react-icons/go";
@@ -23,65 +26,39 @@ import { FaSmileWink } from "react-icons/fa";
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
 import Loader from "../../components/Loader/Loader";
+import {
+  addNewComment,
+  deleteSinglePostClickHandler,
+  fetchPostData,
+} from "./SinglePostScript";
+
+import SingleComment from "../../components/SingleComment/SingleComment";
 
 export default function SinglePost({ setSubsection, subsection }) {
   const { postid } = useParams();
-  let username = "Akash";
   const [post, setPost] = useState({});
   const [likedPost, setLikedPost] = useState(false);
   const [showEmojis, setShowEmojis] = useState(false);
-  const [newComment, setNewComment] = useState("");
+  const [newCommentText, setNewCommentText] = useState("");
+  const [newCommentImg, setNewCommentImg] = useState("");
+  const [imgFit, setImgFit] = useState("contain");
   const [imagePreview, setImagePreview] = useState("");
   const [showPostOptions, setShowPostOptions] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [noOfLikes, setNoOfLikes] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setSubsection("");
-
-    setPost({
-      created_by: {
-        id: "37gg232hjg3nb4jg3j4",
-        username: "Rahul Baniya",
-        profilephoto: profilePhoto,
-      },
-      created_at: "Fri May 17 2024 07:53:18",
-      text: "Maja Kat Raha hoon!!",
-      img: {
-        filename: "",
-        url: "https://images.unsplash.com/photo-1416169607655-0c2b3ce2e1cc?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      },
-      likes: [
-        { liked_by: "Abhishek" },
-        { liked_by: "Lakshya" },
-        { liked_by: "Akash Mishra" },
-      ],
-      comments: [
-        {
-          commented_by: "Akash Mishra",
-          comment_text: "Mast Jindgi hai be!",
-          commented_at: "Fri May 17 2024 07:53:18",
-          likes: [{ name: "Akash" }, { name: "Rahul" }, { name: "Lakshya" }],
-        },
-        {
-          commented_by: "Abhishek",
-          comment_text: "Best DP!!",
-          commented_at: "Fri May 25 2024 07:53:18",
-          likes: [{ name: "Swapnil" }, { name: "Rahul" }],
-        },
-      ],
-    });
-    setLoading(false);
-  }, []);
-
-  function checkCommentLike(username, index) {
-    for (let i = 0; i < post?.comments[index]?.likes?.length; i++) {
-      const like = post?.comments[index]?.likes[i];
-      if (like?.name === username) {
-        return true;
-      }
-    }
-    return false;
-  }
+    fetchPostData(
+      setPost,
+      setLikedPost,
+      setLoading,
+      navigate,
+      postid,
+      setNoOfLikes
+    );
+  }, [postid]);
 
   return (
     <div className="SinglePost">
@@ -90,7 +67,7 @@ export default function SinglePost({ setSubsection, subsection }) {
       </div>
 
       {loading && (
-        <div style={{width:"75%"}}>
+        <div style={{ width: "75%" }}>
           <Loader />
         </div>
       )}
@@ -99,10 +76,10 @@ export default function SinglePost({ setSubsection, subsection }) {
         <div className="SinglePost-right">
           <div className="SinglePost-header">
             <NavLink
-              to={`/user/${post?.created_by?.id}/profile`}
+              to={`/user/${post?.created_by?._id}/profile`}
               className="SinglePost-name-img-container"
             >
-              <img src={profilePhoto} alt="" />
+              <img src={post?.created_by?.profile_photo?.url} alt="" />
               <div>
                 <div className="SinglePost-name">
                   {post?.created_by?.username}
@@ -123,8 +100,30 @@ export default function SinglePost({ setSubsection, subsection }) {
             </div>
           </div>
           <hr />
-          <div className="SinglePost-text">{post?.text}</div>
-          <img className="SinglePost-img" src={post?.img?.url} alt="" />
+          {post?.post_text && (
+            <div className="SinglePost-text">{post?.post_text}</div>
+          )}
+          {post?.post_img?.url && (
+            <div className="SinglePost-img-container">
+              <img
+                className="SinglePost-img"
+                src={post?.post_img?.url}
+                alt="singlepost"
+                id="SinglePost-post-img"
+                style={{ objectFit: imgFit }}
+              />
+              <div
+                className="Singlepost-img-extended-opt"
+                onClick={() => {
+                  imgFit === "contain"
+                    ? setImgFit("cover")
+                    : setImgFit("contain");
+                }}
+              >
+                {imgFit.charAt(0).toUpperCase() + imgFit.substring(1)} Image
+              </div>
+            </div>
+          )}
 
           <div className="HomePost-like-comment">
             <div className="HomePost-icons">
@@ -132,16 +131,24 @@ export default function SinglePost({ setSubsection, subsection }) {
                 {likedPost ? (
                   <GoHeartFill
                     className="HomePost-icon"
-                    onClick={() => setLikedPost(false)}
+                    onClick={() => {
+                      removeLikeClickHandler(post?._id);
+                      setLikedPost(false);
+                      setNoOfLikes(noOfLikes - 1);
+                    }}
                     style={{ color: "var(--dark-red)" }}
                   />
                 ) : (
                   <GoHeart
                     className="HomePost-icon"
-                    onClick={() => setLikedPost(true)}
+                    onClick={() => {
+                      likeClickHandler(post?._id);
+                      setLikedPost(true);
+                      setNoOfLikes(noOfLikes + 1);
+                    }}
                   />
                 )}
-                <span>{post?.likes?.length}</span>
+                <span>{noOfLikes}</span>
               </div>
 
               <div className="HomePost-icon-container">
@@ -156,7 +163,7 @@ export default function SinglePost({ setSubsection, subsection }) {
                 <IoMdShare
                   className="HomePost-icon"
                   style={{ color: "#ff7600" }}
-                  onClick={() => handleShare(post?.id)}
+                  onClick={() => handleShare(post?._id)}
                 />
               </div>
             </div>
@@ -168,9 +175,9 @@ export default function SinglePost({ setSubsection, subsection }) {
                   name="post-comment"
                   placeholder="Write your comment"
                   onChange={(e) => {
-                    setNewComment(e.target.value);
+                    setNewCommentText(e.target.value);
                   }}
-                  value={newComment}
+                  value={newCommentText}
                 />
                 <div className="HomePost-comment-img-upload">
                   <input
@@ -178,7 +185,7 @@ export default function SinglePost({ setSubsection, subsection }) {
                     accept="image/png, image/jpeg, image/jpg"
                     className="Home-input-post"
                     onInput={(e) => {
-                      previewImage(e, setImagePreview);
+                      previewImage(e, setImagePreview, setNewCommentImg);
                     }}
                     style={{ width: "100%" }}
                   />
@@ -196,53 +203,28 @@ export default function SinglePost({ setSubsection, subsection }) {
                 />
               </div>
 
-              <div className="HomePost-comment-btn">Comment</div>
-            </div>
-          </div>
-          <hr />
-
-          <div className="SinglePost-allComments">
-            <h3>All Comments</h3>
-            {post?.comments?.map((comment, index) => (
-              <div key={index} className="SinglePost-single-comment">
-                <div className="SinglePost-img-name-time-container">
-                  <div className="SinglePost-img-name-container">
-                    <img
-                      className="SinglePost-commentor-photo"
-                      src={profilePhoto}
-                      alt=""
-                    />
-                    <div className="SinglePost-commentor-name">
-                      {comment?.commented_by}
-                    </div>
-                  </div>
-                  <div className="SinglePost-comment-time">
-                    {convertPostTime(comment?.commented_at)}
-                  </div>
-                </div>
-                <div className="SinglePost-comment_text">
-                  {comment?.comment_text}
-                </div>
-                {
-                  <img
-                    className="SinglePost-comment-img"
-                    src={profilePhoto}
-                    alt=""
-                  />
-                }
-                <div className="SinglePost-comment-like-container">
-                  {checkCommentLike(username, index) ? (
-                    <GoHeartFill
-                      className="SinglePost-comment-like-icon"
-                      color="var(--dark-red)"
-                    />
-                  ) : (
-                    <GoHeart className="SinglePost-comment-like-icon" />
-                  )}
-                  <span>{comment?.likes?.length} Likes</span>
-                </div>
+              <div
+                className="HomePost-comment-btn"
+                onClick={() => {
+                  setLoading(true);
+                  addNewComment(
+                    newCommentText,
+                    newCommentImg,
+                    setNewCommentText,
+                    setNewCommentImg,
+                    setImagePreview,
+                    postid,
+                    setPost,
+                    setLikedPost,
+                    setLoading,
+                    navigate,
+                    setNoOfLikes
+                  );
+                }}
+              >
+                Comment
               </div>
-            ))}
+            </div>
           </div>
 
           {imagePreview !== "" && (
@@ -253,14 +235,40 @@ export default function SinglePost({ setSubsection, subsection }) {
             />
           )}
 
+          <hr />
+
+          <div className="SinglePost-allComments">
+            {post?.comments?.length > 0 && <h3>All Comments</h3>}
+            {post?.comments?.length === 0 && <h3>No Comments yet!!</h3>}
+            {post?.comments?.map((comment, index) => (
+              <SingleComment
+                key={index}
+                comment={comment}
+                setPost={setPost}
+                setLikedPost={setLikedPost}
+                setLoading={setLoading}
+                navigate={navigate}
+                postid={postid}
+                setNoOfLikes={setNoOfLikes}
+              />
+            ))}
+          </div>
+
           {showPostOptions && (
             <div className="HomePost-show-options">
-              <div>Save Post</div>
-              <div>Add to Favorites</div>
-              {post?.img && (
+              <div onClick={() => savePostClickHandler(post?._id)}>
+                Save Post
+              </div>
+              <div onClick={() => addtoFavoriteClickHandler(post?._id)}>
+                Add to Favorites
+              </div>
+              {post?.post_img?.url && (
                 <div
                   onClick={() => {
-                    downloadImage(post?.img?.url, post?.img.filename);
+                    downloadImage(
+                      post?.post_img?.url,
+                      post?.post_img?.filename
+                    );
                     setShowPostOptions(false);
                   }}
                 >
@@ -269,12 +277,24 @@ export default function SinglePost({ setSubsection, subsection }) {
               )}
               <div
                 onClick={() => {
-                  handleCopy(post?.id);
+                  handleCopy(post?._id);
                   setShowPostOptions(false);
                 }}
               >
                 Copy Link
               </div>
+
+              {localStorage.getItem("userid") === post?.created_by?._id && (
+                <div
+                  onClick={() => {
+                    deleteSinglePostClickHandler(post?._id, navigate);
+                    setShowPostOptions(false);
+                  }}
+                >
+                  Delete Post
+                </div>
+              )}
+
               <div>Report Inappropriate</div>
             </div>
           )}
@@ -283,7 +303,9 @@ export default function SinglePost({ setSubsection, subsection }) {
             <div className="HomePost-emoji-input-container">
               <Picker
                 data={data}
-                onEmojiSelect={(e) => addEmoji(e, setNewComment, newComment)}
+                onEmojiSelect={(e) =>
+                  addEmoji(e, setNewCommentText, newCommentText)
+                }
               />
             </div>
           )}

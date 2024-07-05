@@ -1,14 +1,5 @@
 import React, { useState } from "react";
 import "./Login.css";
-import {
-  emailSignInBtnHandler,
-  googleSignInBtnHandler,
-  // githubSignInBtnHandler,
-  linkedinSignInBtnHandler,
-  instagramSignInBtnHandler,
-  // checkHandler,
-  // logout,
-} from "../Signup/SignupScript";
 import signupImg from "../../assets/signup_img.jpg";
 import { FaUser } from "react-icons/fa";
 import { FaLock } from "react-icons/fa";
@@ -17,33 +8,39 @@ import { FaEyeSlash } from "react-icons/fa6";
 import { FaGoogle } from "react-icons/fa";
 import { FaLinkedinIn } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import {
+  emailLoginBtnHandler,
+  forgetPasswordClickHandler,
+} from "./LoginScript";
 
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <div className="Signup Login">
       <h2>Welcome Back!!</h2>
       <div className="Signup-container">
-        <img src={signupImg} alt="" />
+        <img src={signupImg} alt="" id="login-img" />
         <form
           className="Signup-form"
-          onSubmit={(e) => emailSignInBtnHandler(e, username, password)}
+          onSubmit={(e) =>
+            emailLoginBtnHandler(e, username, password, navigate)
+          }
         >
           <div className="Signup-btn-container">
-            <div> <NavLink to="/signup">SignUp</NavLink></div>
-            <div>
-              LogIn
-            </div>
+            <NavLink to="/signup">
+              <>Signup</>
+            </NavLink>
+            <div>LogIn</div>
           </div>
 
-          <div className="Signup-form-inputElement">
+          <div className="Signup-form-inputElement" id="login-username">
             <FaUser className="Signup-form-inputElement-icon" />
             <input
-              id="username"
               type="text"
               onChange={(e) => setUsername(e.target.value)}
               placeholder="E-mail or Username*"
@@ -51,13 +48,14 @@ export default function Login() {
             />
           </div>
 
-          <div className="Signup-form-inputElement">
+          <div className="Signup-form-inputElement" id="login-pass">
             <FaLock className="Signup-form-inputElement-icon" />
             <input
               id="password"
               type={showPassword ? "text" : "password"}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Password*"
+              required
             />
             {showPassword ? (
               <FaEyeSlash
@@ -72,6 +70,13 @@ export default function Login() {
             )}
           </div>
 
+          <div
+            onClick={() => forgetPasswordClickHandler(navigate, username)}
+            className="Login-forget-pass"
+          >
+            Forget Password
+          </div>
+
           <button type="submit" className="Signup-submit-btn">
             Login Now
           </button>
@@ -81,22 +86,13 @@ export default function Login() {
             <hr />
           </div>
           <div className="other-signup-option-container">
-            <div
-              className="other-signup-option"
-              onClick={googleSignInBtnHandler}
-            >
+            <div className="other-signup-option">
               <FaGoogle />
             </div>
-            <div
-              className="other-signup-option"
-              onClick={linkedinSignInBtnHandler}
-            >
+            <div className="other-signup-option">
               <FaLinkedinIn />
             </div>
-            <div
-              className="other-signup-option"
-              onClick={instagramSignInBtnHandler}
-            >
+            <div className="other-signup-option">
               <FaInstagram />
             </div>
           </div>

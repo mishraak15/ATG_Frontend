@@ -1,5 +1,6 @@
 import axios from "axios";
 import toast from "react-hot-toast";
+import { fetchJobs } from "../Jobs/JobsScript";
 
 export const addEmoji = (e, setNewPostText, newPostText) => {
   setNewPostText(newPostText + e?.native);
@@ -27,7 +28,6 @@ export function previewImage(
 }
 
 const url = process.env.REACT_APP_BACKEND_URL;
-let userid = "asj3e2j3j23j"; //as user login store the id in localStorage;
 
 export async function createNewPostHandler(
   newPostText,
@@ -37,18 +37,22 @@ export async function createNewPostHandler(
   setNewPostImg,
   setImagePreview,
   setLoading,
-  setPosts
+  setPosts,
+  navigate,
+  postCategory = "Simple Post"
 ) {
+  let userid = localStorage.getItem("userid");
   setLoading(true);
   toast.loading("Loading...");
   axios
     .post(
       `${url}/user/${userid}/newpost`,
-      { newPostText, newPostImg },
+      { newPostText, newPostImg, postCategory },
       {
         headers: {
           "Content-Type": "multipart/form-data",
         },
+        withCredentials: true,
       }
     )
     .then((res) => {
@@ -59,23 +63,32 @@ export async function createNewPostHandler(
         setNewPostImg(null);
         setImagePreview("");
         setPostBtn(false);
-        fetchPosts(setPosts, setLoading);
+        if (postCategory === "Simple Post") {
+          fetchPosts(setPosts, setLoading, navigate);
+        } else {
+          fetchJobs(setPosts, setLoading);
+        }
       } else {
         toast.remove();
-        toast.error("Something went wrong!!");
+        toast.error("Something unusual happened!!");
       }
       setLoading(false);
     })
     .catch((err) => {
-      console.log(err);
       toast.remove();
-      toast.error("Something unusual happened!!");
+      console.log(err);
+      const errMsg = err?.response?.data?.message || "Something went wrong!!";
+      if (errMsg === "You are not logged in") {
+        navigate("/login");
+      }
+      toast.error(errMsg);
     });
 }
 
-export async function fetchPosts(setPosts, setLoading) {
+export async function fetchPosts(setPosts, setLoading, navigate) {
+  let userid = localStorage.getItem("userid");
   axios
-    .get(`${url}/user/${userid}/posts`)
+    .get(`${url}/user/${userid}/posts`, { withCredentials: true })
     .then((res) => {
       if (res?.data?.msg === "OK") {
         setPosts(res?.data?.posts);
@@ -85,7 +98,24 @@ export async function fetchPosts(setPosts, setLoading) {
       }
     })
     .catch((err) => {
-      console.log(err);
-      toast.error("Something went wrong!!");
+      console.log(err?.response?.data);
+      if (err?.response?.data?.message === "You are not logged in") {
+        let currUser = localStorage.getItem("currUser");
+
+        if (currUser && currUser !== "") {
+          return navigate("/verifyAccount");
+        } else {
+          toast.error("You are not logged in!!");
+          return navigate("/login");
+        }
+      } else if (
+        err?.response?.data?.message ===
+        "The user belonging to this token does no longer exist."
+      ) {
+        toast.error(err?.response?.data?.message);
+        navigate("/signup");
+      } else {
+        toast.error("Something went wrong!!");
+      }
     });
 }

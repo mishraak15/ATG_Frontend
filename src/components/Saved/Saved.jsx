@@ -14,15 +14,15 @@ export default function Saved() {
   }, []);
 
   const url = process.env.REACT_APP_BACKEND_URL;
-  let userid = "6653001e262fa63382979cfa";
 
   async function fetchSavedPosts() {
+    let userid = localStorage.getItem("userid");
+    setLoading(true);
     axios
-      .get(`${url}/user/${userid}/fetchsaved`)
+      .get(`${url}/user/${userid}/fetchsaved`, { withCredentials: true })
       .then((res) => {
         if (res?.data?.msg === "OK") {
           setPosts(res?.data?.saved);
-          console.log(res?.data?.saved);
           setLoading(false);
         } else {
           toast.error("Something unusual happened!!");
@@ -30,17 +30,28 @@ export default function Saved() {
       })
       .catch((err) => {
         console.log(err);
-        toast.error("Something went wrong!!");
+        let errMsg = err?.response?.data?.message || "Something went wrong!!";
+        toast.remove();
+        toast.error(errMsg);
       });
   }
 
   return (
     <div className="Saved">
-      <h2>All Saved Pages</h2>
-      {loading === false &&
-        posts?.map((post, index) => <HomePost post={post} key={index} />)}
-
+      {posts.length > 0 && <h2>All Saved Pages</h2>}
+      {!loading &&
+        posts?.map((post, index) => (
+          <HomePost
+            post={post}
+            key={index}
+            mode="Saved"
+            fetchSavedPosts={fetchSavedPosts}
+          />
+        ))}
       {loading && <Loader />}
+      {!loading && posts.length === 0 && (
+        <div className="Request-none">No Saved Post Yet!!</div>
+      )}
     </div>
   );
 }

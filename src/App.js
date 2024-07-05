@@ -8,6 +8,9 @@ import AllNotifications from "./pages/AllNotifications/AllNotifications";
 import { useState } from "react";
 import SinglePost from "./pages/SinglePost/SinglePost";
 import SingleUser from "./pages/SingleUser/SingleUser";
+import VerifyAccount from "./pages/VerifyAccount/VerifyAccount";
+import ResetPassword from "./pages/ResetPassword/ResetPassword";
+import EditProfile from "./pages/EditProfile/EditProfile";
 
 function App() {
   const [subsection, setSubsection] = useState("Home");
@@ -52,8 +55,17 @@ function App() {
           }
         />
 
+        <Route
+          path={`/user/:userid/editProfile`}
+          element={
+            <EditProfile />
+          }
+        />
+
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/verifyAccount" element={<VerifyAccount />} />
+        <Route path="/resetpassword" element={<ResetPassword />} />
         <Route path="*" element={<h2>Page Not Found</h2>} />
       </Routes>
     </div>

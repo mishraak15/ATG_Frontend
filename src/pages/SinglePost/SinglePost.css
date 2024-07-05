@@ -19,6 +19,7 @@
   border-radius: 6px;
   padding: 1em;
   position: relative;
+  height: fit-content;
 }
 
 .SinglePost-header {
@@ -38,7 +39,6 @@
   height: 45px;
   border-radius: 50%;
   border: 1px solid var(--light-grey);
-  image-rendering: pixelated;
 }
 
 .SinglePost-name {
@@ -53,19 +53,42 @@
   line-height: 1em;
 }
 
-.SinglePost-text{
-    margin:  5px 5px;
-    font-weight: 600;
-    font-size: 19px;
+.SinglePost-text {
+  margin: 5px 5px;
+  font-weight: 600;
+  font-size: 19px;
+}
+
+.SinglePost-img-container {
+  margin: 10px 0;
+  position: relative;
 }
 
 .SinglePost-img {
   width: 100%;
-  object-fit: cover;
+  object-fit: contain;
   height: 450px;
   image-rendering: pixelated;
-  margin: 10px 0;
   border-radius: 6px;
+}
+
+.Singlepost-img-extended-opt {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  background-color: var(--light-grey);
+  font-size: 15px;
+  color: black;
+  font-weight: 600;
+  width: fit-content;
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+
+.Singlepost-img-extended-opt:hover {
+  background-color: #88888859;
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
 }
 
 .SinglePost-right .HomePost-show-options {
@@ -73,112 +96,124 @@
   gap: 4px;
 }
 
-.SinglePost-right .HomePost-emoji-input-container{
-    right: 16px;
-    bottom: 80px;
+.SinglePost-right .HomePost-emoji-input-container {
+  right: 16px;
+  bottom: 80px;
 }
 
-.SinglePost-right .HomePost-show-options div{
-    padding: 6px 8px;
-    font-size: 16px;
+.SinglePost-right .HomePost-show-options div {
+  padding: 6px 8px;
+  font-size: 16px;
 }
 
-.SinglePost-right .HomePost-write-comment{
-    width: 60%;
+.SinglePost-right .HomePost-write-comment {
+  width: 60%;
 }
 
-.SinglePost-right .HomePost-write-comment input{
-    font-size: 15px;
-    width: 86%;
+.SinglePost-right .HomePost-write-comment input {
+  font-size: 15px;
+  width: 86%;
 }
 
-.SinglePost-right .HomePost-comment-inp-icon{
-    font-size: 1.3em;
+.SinglePost-right .HomePost-comment-inp-icon {
+  font-size: 1.3em;
 }
 
-.SinglePost-right .HomePost-icon{
-    font-size: 1.5em;
+.SinglePost-right .HomePost-icon {
+  font-size: 1.5em;
 }
 
-
-.SinglePost-right .HomePost-comment-img-upload{
-    right: 39px;
-    top: 7px;
-    font-size: 1.3em;
+.SinglePost-right .HomePost-comment-img-upload {
+  right: 39px;
+  top: 7px;
+  font-size: 1.3em;
 }
 
-.SinglePost-single-comment{
-    padding: 10px;
-    background-color: var(--light-grey);
-    border-radius: 6px;
-    margin: 10px 0;
-    width: fit-content;
-    max-width: 60%;
-    min-width: 40%;
+.SinglePost-allComments h3 {
+  margin: 10px 0;
 }
 
-.SinglePost-img-name-time-container{
-    display: flex;
-    justify-content: space-between;
+.SinglePost-single-comment {
+  padding: 10px;
+  background-color: var(--light-grey);
+  border-radius: 6px;
+  margin: 10px 0;
+  width: fit-content;
+  max-width: 60%;
+  min-width: 40%;
+  position: relative;
 }
 
-.SinglePost-img-name-container{
-    display: flex;
-    align-items: center;
-    gap: 8px;
+.SinglePost-img-name-time-container {
+  display: flex;
+  justify-content: space-between;
 }
 
-.SinglePost-commentor-name{
-    font-weight: 600;
+.SinglePost-img-name-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.SinglePost-comment-time{
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--dark-grey);
+.SinglePost-commentor-name {
+  font-weight: 600;
 }
 
-.SinglePost-commentor-photo{
-    width: 35px;
-    height: 35px;
-    object-fit: cover;
-    image-rendering: pixelated;
-    border-radius: 50%;
-    border: 1px solid var(--dark-grey);
+.SinglePost-comment-time {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--dark-grey);
 }
 
-.SinglePost-comment-img{
-    width:90px;
-    height: 80px;
-    border-radius: 6px;
-    object-fit: cover;
-    image-rendering: pixelated;
-    margin-top: 5px;
+.SinglePost-commentor-photo {
+  width: 35px;
+  height: 35px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 1px solid var(--dark-grey);
 }
 
-.SinglePost-comment_text{
-    font-family: "Poppins",sans-serif;
-    margin: 5px;
+.SinglePost-comment-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 6px;
+  /* object-fit: contain; */
+  /* image-rendering: pixelated; */
+  margin-top: 5px;
 }
 
-.SinglePost-comment-like-container{
-    display: flex;
-    align-items: center;
-    justify-content: right;
-    cursor: pointer;
+.SinglePost-comment_text {
+  font-family: "Poppins", sans-serif;
+  margin: 5px;
 }
 
-.SinglePost-comment-like-container span{
-    margin: 0 5px;
-    font-weight: 600;
-    font-size: 15px;
-    color: var(--dark-grey);
+.SinglePost-comment-like-container {
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  cursor: pointer;
 }
 
-.SinglePost-comment-like-icon{
-    padding: 5px;
-    background-color: #ffc2cb;
-    border-radius: 50%;
-    font-size: 1.3em;
-    color: red;
+.SinglePost-comment-like-container span {
+  margin: 0 5px;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--dark-grey);
+}
+
+.SinglePost-comment-like-icon {
+  padding: 5px;
+  background-color: #ffc2cb;
+  border-radius: 50%;
+  font-size: 1.3em;
+  color: red;
+}
+
+.SinglePost .HomePost-emoji-input-container {
+  height: fit-content;
+  top: 135px;
+}
+
+.SinglePost .HomePost-comment-inp-icon {
+  top: 8px;
 }

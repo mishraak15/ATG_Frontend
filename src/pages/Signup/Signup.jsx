@@ -6,8 +6,6 @@ import {
   // githubSignInBtnHandler,
   linkedinSignInBtnHandler,
   instagramSignInBtnHandler,
-  // checkHandler,
-  // logout,
 } from "./SignupScript";
 import signupImg from "../../assets/signup_img.jpg";
 import { FaUser } from "react-icons/fa";
@@ -25,24 +23,26 @@ export default function Signup() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
 
   return (
     <div className="Signup">
-      <h2>Welcome Back!!</h2>
+      {/* <h2>Welcome Back!!</h2> */}
       <div className="Signup-container">
         <img src={signupImg} alt="" />
         <form
           className="Signup-form"
           onSubmit={(e) => {
-            emailSignInBtnHandler(e, username, email, password, navigate);
+            emailSignInBtnHandler(e, username, email, password,confirmPassword, navigate);
           }}
         >
           <div className="Signup-btn-container">
             <div>SignUp</div>
-            <div>
-              <NavLink to="/login">LogIn</NavLink>
-            </div>
+            <NavLink to="/login">
+              <>LogIn</>
+            </NavLink>
           </div>
 
           <div className="Signup-form-inputElement">
@@ -74,6 +74,7 @@ export default function Signup() {
               type={showPassword ? "text" : "password"}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Password*"
+              required
             />
             {showPassword ? (
               <FaEyeSlash
@@ -83,6 +84,28 @@ export default function Signup() {
             ) : (
               <FaEye
                 onClick={() => setShowPassword(!showPassword)}
+                className="Signup-form-inputElement-icon"
+              />
+            )}
+          </div>
+
+          <div className="Signup-form-inputElement">
+            <FaLock className="Signup-form-inputElement-icon" />
+            <input
+              id="confirmPassword"
+              type={showConfirmPassword ? "text" : "password"}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              placeholder="Confirm Password*"
+              required
+            />
+            {showConfirmPassword ? (
+              <FaEyeSlash
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                className="Signup-form-inputElement-icon"
+              />
+            ) : (
+              <FaEye
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 className="Signup-form-inputElement-icon"
               />
             )}

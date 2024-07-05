@@ -1,0 +1,44 @@
+.post-categories select {
+  width: 100%;
+  margin: 1em 0;
+  border: none;
+  padding: 8px;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 500;
+  font-family: "Poppins", sans-serif;
+  outline: none;
+  cursor: pointer;
+}
+
+.Job-container {
+  display: flex;
+  flex-direction: column;
+  margin: 1.5em 0;
+  gap: 1em;
+}
+
+.job-search-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+  margin: 1em 0;
+  background-color: white;
+  padding: 1em 10px;
+  border-radius: 6px;
+}
+
+.job-search-option {
+  padding: 2px 5px;
+  font-size: 13px;
+  background-color: var(--light-grey);
+  border-radius: 6px;
+  font-family: "Poppins", sans-serif;
+}
+
+
+.job-search-option:hover {
+  cursor: pointer;
+  background-color: #b8b8b8;
+  transition: all 0.1s ease-in-out;
+}

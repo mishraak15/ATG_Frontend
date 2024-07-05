@@ -12,6 +12,9 @@ import {
   newCommentClickHandler,
   savePostClickHandler,
   addtoFavoriteClickHandler,
+  deletePostClickHandler,
+  removeFromFavoriteClickHandler,
+  removeSavedPostClickHandler,
 } from "./HomePostScript";
 
 import { GoHeartFill } from "react-icons/go";
@@ -20,13 +23,19 @@ import { FaCommentDots } from "react-icons/fa";
 import { IoMdShare } from "react-icons/io";
 import { FaCamera } from "react-icons/fa";
 import { FaSmileWink } from "react-icons/fa";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
 
-export default function HomePost({ post }) {
-  // const postId = "dfsdjf234b12jk12";
+export default function HomePost({
+  post,
+  setPosts,
+  setLoading,
+  mode = "Post",
+  fetchFavoritePosts,
+  fetchSavedPosts,
+}) {
   const [likedPost, setLikedPost] = useState(false);
   const [like, setLike] = useState(0);
   const [showEmojis, setShowEmojis] = useState(false);
@@ -36,14 +45,14 @@ export default function HomePost({ post }) {
   const [imagePreview, setImagePreview] = useState("");
   const [topComment, setTopComment] = useState({});
   const [commentLength, setCommentLength] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    let userid = "6653001e262fa63382979cfa";
+    let userid = localStorage.getItem("userid");
     setLike(post?.likes?.length);
     setLikedPost(false);
     post?.likes?.forEach((l) => {
-      console.log(l);
-      if (l === userid) {
+      if (l._id === userid) {
         setLikedPost(true);
       }
     });
@@ -61,6 +70,9 @@ export default function HomePost({ post }) {
 
   return (
     <div className="HomePost">
+      {post?.category !== "Simple Post" && (
+        <div className="HomePost-category">{post?.category}</div>
+      )}
       <div className="HomePost-name-time">
         <NavLink
           to={`/user/${post?.created_by?._id}/profile`}
@@ -212,6 +224,7 @@ export default function HomePost({ post }) {
             className="HomePost-top-comment-profilephoto"
             src={topComment?.creator_profile_photo?.url}
             alt=""
+            loading="lazy"
           />
           <div className="HomePost-top-comment-container">
             <NavLink
@@ -228,7 +241,12 @@ export default function HomePost({ post }) {
                 loading="lazy"
               />
             )}
-            <div>{topComment?.comment_text}</div>
+            <div className="HomePost-top-comment-text">
+              {topComment?.comment_text}
+            </div>
+            <div className="HomePost-top-comment-time">
+              {convertPostTime(topComment?.created_at)}
+            </div>
           </div>
         </div>
       )}
@@ -244,22 +262,48 @@ export default function HomePost({ post }) {
 
       {showPostOptions && (
         <div className="HomePost-show-options">
-          <div
-            onClick={() => {
-              savePostClickHandler(post?._id);
-              setShowPostOptions(false);
-            }}
-          >
-            Save Post
-          </div>
-          <div
-            onClick={() => {
-              addtoFavoriteClickHandler(post?._id);
-              setShowPostOptions(false);
-            }}
-          >
-            Add to Favorites
-          </div>
+          {mode !== "Saved" && (
+            <div
+              onClick={() => {
+                savePostClickHandler(post?._id);
+                setShowPostOptions(false);
+              }}
+            >
+              Save Post
+            </div>
+          )}
+
+          {mode === "Saved" && (
+            <div
+              onClick={() => {
+                removeSavedPostClickHandler(post?._id, fetchSavedPosts);
+                setShowPostOptions(false);
+              }}
+            >
+              Remove from Saved
+            </div>
+          )}
+          {mode !== "Favorites" && (
+            <div
+              onClick={() => {
+                addtoFavoriteClickHandler(post?._id);
+                setShowPostOptions(false);
+              }}
+            >
+              Add to Favorites
+            </div>
+          )}
+
+          {mode === "Favorites" && (
+            <div
+              onClick={() => {
+                removeFromFavoriteClickHandler(post?._id, fetchFavoritePosts);
+                setShowPostOptions(false);
+              }}
+            >
+              Remove from Favorites
+            </div>
+          )}
           {post?.post_img && (
             <div
               onClick={() => {
@@ -278,6 +322,24 @@ export default function HomePost({ post }) {
           >
             Copy Link
           </div>
+          {localStorage.getItem("userid") === post?.created_by?._id &&
+            mode !== "Saved" &&
+            mode !== "Favorites" && (
+              <div
+                onClick={() => {
+                  deletePostClickHandler(
+                    post?._id,
+                    navigate,
+                    setPosts,
+                    setLoading,
+                    mode
+                  );
+                  setShowPostOptions(false);
+                }}
+              >
+                Delete Post
+              </div>
+            )}
           <div>Report Inappropriate</div>
         </div>
       )}

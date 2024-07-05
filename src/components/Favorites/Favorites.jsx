@@ -14,15 +14,15 @@ export default function Favorites() {
   }, []);
 
   const url = process.env.REACT_APP_BACKEND_URL;
-  let userid = "6653001e262fa63382979cfa";
 
   async function fetchFavoritePosts() {
+    let userid = localStorage.getItem("userid");
+    setLoading(true);
     axios
-      .get(`${url}/user/${userid}/fetchfavorites`)
+      .get(`${url}/user/${userid}/fetchfavorites`, { withCredentials: true })
       .then((res) => {
         if (res?.data?.msg === "OK") {
           setPosts(res?.data?.favorites);
-          console.log(res?.data?.favorites);
           setLoading(false);
         } else {
           toast.error("Something unusual happened!!");
@@ -30,17 +30,23 @@ export default function Favorites() {
       })
       .catch((err) => {
         console.log(err);
-        toast.error("Something went wrong!!");
+        let errMsg = err?.response?.data?.message || "Something went wrong!!";
+        toast.remove();
+        toast.error(errMsg);
       });
   }
 
-
   return (
     <div className="Favorites">
-      <h2>Your Favorites</h2>
-      {loading === false &&
-        posts?.map((post, index) => <HomePost post={post} key={index} />)}
+      {posts.length > 0 && <h2>Your Favorites</h2>}
+      {!loading &&
+        posts?.map((post, index) => (
+          <HomePost post={post} key={index} mode="Favorites" fetchFavoritePosts={fetchFavoritePosts} />
+        ))}
       {loading && <Loader />}
+      {!loading && posts.length === 0 && (
+        <div className="Request-none">No Favorites Yet!!</div>
+      )}
     </div>
   );
 }

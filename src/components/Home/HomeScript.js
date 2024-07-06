@@ -116,6 +116,7 @@ export async function fetchPosts(setPosts, setLoading, navigate) {
         navigate("/signup");
       } else {
         toast.error("Something went wrong!!");
+        navigate("/signup");
       }
     });
 }

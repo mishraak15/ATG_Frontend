@@ -39,6 +39,9 @@ export default function Navbar() {
 
   function fetchUserData() {
     const userid = localStorage.getItem("userid");
+    if(!userid){
+      navigate("/login");
+    }
     axios
       .get(`${url}/user/${userid}/profile`, { withCredentials: true })
       .then((res) => {

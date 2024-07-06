@@ -84,6 +84,9 @@ export async function fetchNotifications(
       if (errMsg === "You are not logged in") {
         navigate("/login");
       }
+       if (err?.response?.data?.status === "fail") {
+        navigate("/login");
+      }
       toast.error(errMsg);
     });
 }

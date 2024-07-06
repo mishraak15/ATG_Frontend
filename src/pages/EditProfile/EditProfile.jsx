@@ -9,7 +9,7 @@ const url = process.env.REACT_APP_BACKEND_URL;
 
 export default function EditProfile() {
   let userid = localStorage.getItem("userid");
-  let [focusOn, setFocusOn] = useState(false);
+  let [focusOn, setFocusOn] = useState(0);
   let [profilePhotoUrl, setProfilePhotoUrl] = useState("");
   let [backgroundPhotoUrl, setBackgroundPhotoUrl] = useState("");
   let [editedData, setEditedData] = useState({
@@ -95,16 +95,25 @@ export default function EditProfile() {
     fetchUserData();
     setLoading(false);
   }, []);
- 
+
   function inpChangeHandler(e) {
     setEditedData({ ...editedData, [e.target.name]: e.target.value });
   }
 
   function submitEditedUser(e) {
     e.preventDefault();
+
+    if (
+      editedData?.mobile_no?.length < 10 ||
+      editedData?.mobile_no?.length > 15
+    ) {
+      setFocusOn(2);
+      return toast.error("Invalid Mobile Number");
+    }
+
     let userid = localStorage.getItem("userid");
     setLoading(true);
-    setFocusOn(false);
+    setFocusOn(0);
     axios
       .post(
         `${url}/user/${userid}/editUser`,
@@ -136,7 +145,7 @@ export default function EditProfile() {
         if (err?.response?.data?.error?.codeName === "DuplicateKey") {
           setLoading(false);
           toast.error("Username is already present");
-          return setFocusOn(true);
+          return setFocusOn(1);
         }
         toast.error(errMsg);
       });
@@ -197,7 +206,9 @@ export default function EditProfile() {
           value={editedData?.username}
           required
           onChange={(e) => inpChangeHandler(e)}
-          style={focusOn ? { border: "2px solid red" } : { border: "none" }}
+          style={
+            focusOn === 1 ? { border: "2px solid red" } : { border: "none" }
+          }
         />
       </div>
 
@@ -235,6 +246,9 @@ export default function EditProfile() {
             inpChangeHandler(e);
           }}
         >
+          <option value="" disabled>
+            Choose your gender
+          </option>
           <option value="Male" className="gender-opt">
             Male
           </option>
@@ -243,9 +257,6 @@ export default function EditProfile() {
           </option>
           <option value="Other" className="gender-opt">
             Other
-          </option>
-          <option value="" disabled>
-            Choose your gender
           </option>
         </select>
       </div>
@@ -271,6 +282,9 @@ export default function EditProfile() {
           value={editedData?.mobile_no}
           placeholder="Enter Mobile no."
           onChange={(e) => inpChangeHandler(e)}
+          style={
+            focusOn === 2 ? { border: "2px solid red" } : { border: "none" }
+          }
         />
       </div>
 

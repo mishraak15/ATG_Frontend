@@ -11,6 +11,7 @@ import SingleUser from "./pages/SingleUser/SingleUser";
 import VerifyAccount from "./pages/VerifyAccount/VerifyAccount";
 import ResetPassword from "./pages/ResetPassword/ResetPassword";
 import EditProfile from "./pages/EditProfile/EditProfile";
+import ChangePassword from "./pages/ChangePassword/ChangePassword";
 
 function App() {
   const [subsection, setSubsection] = useState("Home");
@@ -55,17 +56,17 @@ function App() {
           }
         />
 
-        <Route
-          path={`/user/:userid/editProfile`}
-          element={
-            <EditProfile />
-          }
-        />
+        <Route path={`/user/:userid/editProfile`} element={<EditProfile />} />
 
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/verifyAccount" element={<VerifyAccount />} />
         <Route path="/resetpassword" element={<ResetPassword />} />
+
+        <Route
+          path={`/user/:userid/changePassword`}
+          element={<ChangePassword />}
+        />
         <Route path="*" element={<h2>Page Not Found</h2>} />
       </Routes>
     </div>

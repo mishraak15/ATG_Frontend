@@ -1,70 +1,65 @@
-# Getting Started with Create React App
+## Across The Globe
+ATG is a professional social media site. Here you can create your regular post, job & internship related post and can delete tehm also. Users can like, comment(with image & emoji) & can share the post. You can copy the post url and can also download image of the post(It it contain). You can easily add and remove a post from your favorites and saved section. All Friends and All Friend Request Section is also present.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+You can send, accept and reject friend requets. also a notification is automatically added to the affected user's section whenever anyone send request, likes or comments his post or his friend added a post. It contain full authentication and authorization with login and signup page. Email verifiaction via mail on given email and incase you forget password reset password link is send to the registered email.
 
-## Available Scripts
+You can also edit user details and password after login.
 
-In the project directory, you can run:
+### `npm install`
+To install all the dependencies and modules needed to run the project.
 
 ### `npm start`
-
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
 
-### `npm test`
+## Glimpses of the Project
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Home Page
+![Screenshot (92)](https://github.com/user-attachments/assets/ebbaed01-e75e-4e3d-ab95-d31fde5f2b83)
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Friends Section
+![Screenshot (93)](https://github.com/user-attachments/assets/667861c7-0c4f-4998-93a7-744185b9f2d8)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Job & Internship Page
+![Screenshot (94)](https://github.com/user-attachments/assets/4cb405e1-dc50-408c-92bf-bac6f67d9f09)
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Saved Post
+![Screenshot (95)](https://github.com/user-attachments/assets/fbb3c499-2be2-49f3-9296-7c5675b22c51)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### User Section
+![Screenshot (96)](https://github.com/user-attachments/assets/a98040c8-d2c2-4cdb-84ec-7a7aad6dc0db)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
+### Single Post
+![Screenshot (97)](https://github.com/user-attachments/assets/848d1d63-8a25-4d32-abac-f156f82efa06)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Comments
+![Screenshot (98)](https://github.com/user-attachments/assets/f96be9b6-fb74-4daa-b217-5f2d75e9c304)
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### All Notifications
+![Screenshot (99)](https://github.com/user-attachments/assets/5e5a79d0-8461-4e31-a37b-9028193f1bd2)
 
-### Analyzing the Bundle Size
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Edit User
+![Screenshot (100)](https://github.com/user-attachments/assets/c2e8264b-4b1e-4f13-90a0-bdc0a6e75535)
 
-### Making a Progressive Web App
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Change Password
+![Screenshot (101)](https://github.com/user-attachments/assets/f196e5c1-7657-4f83-a73f-70ee195e68b4)
 
-### Advanced Configuration
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### Signup Page
+![Screenshot (102)](https://github.com/user-attachments/assets/7c6a199c-799a-46b4-b995-699c82e850a3)
 
-### Deployment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Login Page
+![Screenshot (103)](https://github.com/user-attachments/assets/c80ae51a-08a6-4360-810a-253da4347caa)

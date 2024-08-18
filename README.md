@@ -1,3 +1,4 @@
+### Hosted Url: https://connectingus.netlify.app
 ## Across The Globe
 ATG is a professional social media site. Here you can create your regular post, job & internship related post and can delete tehm also. Users can like, comment(with image & emoji) & can share the post. You can copy the post url and can also download image of the post(It it contain). You can easily add and remove a post from your favorites and saved section. All Friends and All Friend Request Section is also present.
 
